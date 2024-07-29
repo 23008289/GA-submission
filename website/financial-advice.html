@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Advice - Finsynch Platform</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('https://ravenperformancegroup.com/wp-content/uploads/2022/02/2022-02-03-Consider-it-Done.jpg');
+            background-size : cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+    <script>
+    // Redirect to login page if not logged in
+            if (!localStorage.getItem('isLoggedIn')) {
+                window.location.href = 'login.html';
+            }
+    </script>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">Finsynch</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="upcoming-bills.html">Upcoming Bills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="financial-advice.html">Financial Advice</a></li>
+                    <li class="nav-item"><a class="nav-link" href="payment.html">Payment</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container mt-5">
+        <div class="text-center">
+                <h1 style="padding-bottom: 3rem;">Financial Advice Questionnaire</h1>
+        <form id="financialForm">
+            <label style="font-size: larger;" for="goals">What are your financial goals?</label>
+            <input type="text" id="goals" name="goals" required>
+
+            <label style="font-size: larger;" for="spendingHabits">Describe your spending habits:</label>
+            <input type = "text" id="spendingHabits" name="spendingHabits"  required></textarea>
+
+            <button type="submit">Get Advice</button>
+        </form>
+        <div id="adviceSection" class="hidden">
+            <h2 style="padding-bottom: 3rem;">Customized Advice:</h2>
+            <p style="font-size: larger;" id="advice"></p>
+        </div>
+    </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('financialForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Get user input
+    const goals = document.getElementById('goals').value;
+    const spendingHabits = document.getElementById('spendingHabits').value;
+
+    // Generate advice based on user input
+    let advice = '';
+
+    if (goals.toLowerCase().includes('save') || goals.toLowerCase().includes('savings')) {
+        advice += 'To achieve your savings goals, consider setting up a budget and tracking your expenses regularly. ';
+    }
+
+    if (spendingHabits.toLowerCase().includes('impulsive') || spendingHabits.toLowerCase().includes('spontaneous')) {
+        advice += 'If you tend to spend impulsively, you might benefit from creating a detailed budget and setting spending limits for non-essential items. ';
+    } else {
+        advice += 'Maintaining a budget and tracking your expenses can help you stay on track with your financial goals. ';
+    }
+
+    advice += 'Consider consulting a financial advisor for more personalized advice based on your specific situation.';
+
+    // Display advice
+    document.getElementById('advice').textContent = advice;
+    document.getElementById('adviceSection').classList.remove('hidden');
+});
+    </script>
+</body>
+</html>

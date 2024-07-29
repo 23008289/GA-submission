@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Finsynch Platform</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container mt-5">
+        <div class="text-center">
+            <h1>Login</h1>
+            <form id="loginForm" class="mt-4">
+                <div class="form-group">
+                    <input type="text" id="username" class="form-control" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" class="form-control" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <p class="mt-3">Don't have an account? <a href="register.html">Register here</a></p>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Fetch registered users from local storage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Check if the user exists and the password matches
+            const user = users.find(user => user.username === username && user.password === password);
+            
+            if (user) {
+                // Set the login flag in local storage
+                localStorage.setItem('isLoggedIn', 'true');
+                alert('Login successful!');
+                window.location.href = 'index.html';  // Redirect to home page
+            } else {
+                alert('Invalid username or password');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Bills - Finsynch Platform</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body{
+            background-image : url('https://static.vecteezy.com/system/resources/previews/006/732/083/original/bill-icon-sign-symbol-logo-free-vector.jpg');
+            background-size : cover;
+            background-repeat : no-repeat;
+        }
+    </style>
+</head>
+    <script>
+    // Redirect to login page if not logged in
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">Finsynch</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="upcoming-bills.html">Upcoming Bills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="financial-advice.html">Financial Advice</a></li>
+                    <li class="nav-item"><a class="nav-link" href="payment.html">Payment</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container mt-5">
+        <div id="notifications"></div>
+        <div class="text-center">
+            <h1>Upcoming Bills</h1>
+            <form id="billForm" class="mb-4">
+                <div class="form-row">
+                    <div class="col">
+                        <input type="text" id="billName" class="form-control" placeholder="Bill Name" required>
+                    </div>
+                    <div class="col">
+                        <input type="date" id="billDate" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <input type="text" id="billAmount" class="form-control" placeholder="Amount" required>
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Add Bill</button>
+                    </div>
+                </div>
+            </form>
+            <ul id="upcomingBills" class="list-group mt-4"></ul>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const billForm = document.getElementById('billForm');
+            const billName = document.getElementById('billName');
+            const billDate = document.getElementById('billDate');
+            const billAmount = document.getElementById('billAmount');
+            const upcomingBills = document.getElementById('upcomingBills');
+            const notifications = document.getElementById('notifications');
+
+            // Load bills from local storage
+            const bills = JSON.parse(localStorage.getItem('bills')) || [];
+
+            // Function to render bills
+            const renderBills = () => {
+                upcomingBills.innerHTML = '';
+                const today = new Date();
+                const nextWeek = new Date();
+                nextWeek.setDate(today.getDate() + 7);
+
+                notifications.innerHTML = '';
+                bills.forEach((bill, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    listItem.innerHTML = `<div>
+                                            <strong>${bill.name}</strong> - Due: ${bill.dueDate} - Amount: ${bill.amount}
+                                          </div>
+                                          <button class="btn btn-danger btn-sm" onclick="removeBill(${index})">Remove</button>`;
+                    upcomingBills.appendChild(listItem);
+
+                    const billDueDate = new Date(bill.dueDate);
+                    if (billDueDate >= today && billDueDate <= nextWeek) {
+                        const alert = document.createElement('div');
+                        alert.className = 'alert alert-warning';
+                        alert.innerHTML = `Reminder: <strong>${bill.name}</strong> is due on ${bill.dueDate}. Amount: ${bill.amount}`;
+                        notifications.appendChild(alert);
+                    }
+                });
+            };
+
+            // Add new bill
+            billForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const newBill = {
+                    name: billName.value,
+                    dueDate: billDate.value,
+                    amount: billAmount.value
+                };
+                bills.push(newBill);
+                localStorage.setItem('bills', JSON.stringify(bills));
+                renderBills();
+                billForm.reset();
+            });
+
+            // Remove bill
+            window.removeBill = function(index) {
+                bills.splice(index, 1);
+                localStorage.setItem('bills', JSON.stringify(bills));
+                renderBills();
+            };
+
+            // Initial render
+            renderBills();
+        });
+    </script>
+</body>
+</html>
+
+

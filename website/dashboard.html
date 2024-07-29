@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Balances - Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .container {
+            text-align: center;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        .account {
+            margin: 10px 0;
+        }
+        .account input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+    <script>
+    // Redirect to login page if not logged in
+            if (!localStorage.getItem('isLoggedIn')) {
+                window.location.href = 'login.html';
+        }
+    </script>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Finsynch</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="upcoming-bills.html">Upcoming Bills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="financial-advice.html">Financial Advice</a></li>
+                    <li class="nav-item"><a class="nav-link" href="payment.html">Payment</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 style="padding-bottom: 3rem;">Account Balances</h1>
+        <form id="balanceForm">
+            <label for="spendingsAccount">Spendings Account:</label>
+            <input type="number" id="spendingsAccount" value="1200.50">
+            <br>
+            <label for="savingsAccount">Savings Account:</label>
+            <input type="number" id="savingsAccount" value="5400.75">
+            <br>
+            <label for="investmentAccount">Investment Account:</label>
+            <input type="number" id="investmentAccount" value="10500.00">
+            <br>
+            <button type="button" onclick="saveChanges()">Save Changes</button>
+        </form>
+    </main>
+
+    <script>
+        // Retrieve balances from local storage or set default values
+        function getBalances() {
+            return {
+                spendings: parseFloat(localStorage.getItem('spendingsAccount')) || 1200.50,
+                savings: parseFloat(localStorage.getItem('savingsAccount')) || 5400.75,
+                investment: parseFloat(localStorage.getItem('investmentAccount')) || 10500.00
+            };
+        }
+
+        // Save balances to local storage
+        function saveBalances(balances) {
+            localStorage.setItem('spendingsAccount', balances.spendings);
+            localStorage.setItem('savingsAccount', balances.savings);
+            localStorage.setItem('investmentAccount', balances.investment);
+        }
+
+        // Load balances into the dashboard
+        function loadBalances() {
+            const balances = getBalances();
+            document.getElementById('spendingsAccount').value = balances.spendings.toFixed(2);
+            document.getElementById('savingsAccount').value = balances.savings.toFixed(2);
+            document.getElementById('investmentAccount').value = balances.investment.toFixed(2);
+        }
+
+        // Save changes made to the balances manually (for testing purposes)
+        function saveChanges() {
+            const balances = {
+                spendings: parseFloat(document.getElementById('spendingsAccount').value),
+                savings: parseFloat(document.getElementById('savingsAccount').value),
+                investment: parseFloat(document.getElementById('investmentAccount').value)
+            };
+
+            saveBalances(balances);
+            alert('Balances saved successfully!');
+        }
+
+        // Initialize the dashboard page
+        if (window.location.pathname.includes('dashboard.html')) {
+            window.onload = loadBalances;
+        }
+    </script>
+</body>
+</html>
+
+
+
+

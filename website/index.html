@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Finsynch Platform</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('https://thumbs.dreamstime.com/z/fintech-icon-abstract-financial-technology-background-represent-blockchain-investment-internet-90258399.jpg');
+            background-size: cover; 
+            background-repeat: no-repeat;
+        }
+        .faq-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            margin-top: 3rem;
+            border-radius: 8px;
+        }
+        .faq-section h2 {
+            margin-bottom: 1.5rem;
+        }
+        .faq-section dt {
+            font-weight: bold;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+        .faq-section dd {
+            display: none;
+            margin-bottom: 1rem;
+        }
+        .faq-section dd.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Finsynch</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="upcoming-bills.html">Upcoming Bills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="financial-advice.html">Financial Advice</a></li>
+                    <li class="nav-item"><a class="nav-link" href="payment.html">Payment</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item"><button class="btn btn-danger nav-link" id="logoutButton">Logout</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="container mt-5">
+        <div class="text-center">
+            <h1 style="padding-bottom: 3rem;">Welcome to Finsynch</h1>
+            <p style="font-size: larger;">Your comprehensive financial management platform.</p>
+            <p style="font-size: larger;">Finsynch will analyse this data using AI algorithm to give customer active financial tools, customized financial information and product suggestion.</p>
+        </div>
+    </main>
+    <section class="faq-section container">
+        <h2>Common FAQ</h2>
+        <dl>
+            <dt>What is Finsynch?</dt>
+            <dd>Finsynch is a comprehensive financial management platform that uses AI algorithms to provide customers with active financial tools, customized financial information, and product suggestions.</dd>
+
+            <dt>How does Finsynch use my data?</dt>
+            <dd>Finsynch analyzes your financial data using AI algorithms to offer personalized financial advice, tools, and product recommendations that best suit your needs.</dd>
+
+            <dt>Is my data secure with Finsynch?</dt>
+            <dd>Yes, Finsynch uses state-of-the-art encryption and security measures to ensure that your data is always safe and secure.</dd>
+
+            <dt>Can I link multiple bank accounts to Finsynch?</dt>
+            <dd>Yes, you can link multiple bank accounts to Finsynch to get a consolidated view of your finances and manage them more effectively.</dd>
+        </dl>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const faqItems = document.querySelectorAll('.faq-section dt');
+            faqItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    const answer = this.nextElementSibling;
+                    answer.classList.toggle('show');
+                });
+            });
+
+            document.getElementById('logoutButton').addEventListener('click', function() {
+                localStorage.removeItem('isLoggedIn');
+                window.location.href = 'login.html';
+            });
+        });
+
+    </script>
+</body>
+</html>
+
+
